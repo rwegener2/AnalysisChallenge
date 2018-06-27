@@ -24,6 +24,6 @@ Once the container is built the script can be run using the default settings for
 
 If you would like those variables to be set manually by overriding the default CMD of the Dockerfile and running the script with variable flags.  For example:
 
-	docker run -v "/where/output/is/saved/":/home/output boundary python /home/boundary\_select.py -db 5 -sb 0.0002
+	docker run -v "/where/output/is/saved/":/home/output boundary python /home/boundary_select.py -db 5 -sb 0.0002
 
 The output of the code will be saved in the user's directory /where/output/is/saved/.  This folder should hold the output jsons only.
