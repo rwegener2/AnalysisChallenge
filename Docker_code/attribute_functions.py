@@ -3,6 +3,7 @@ import operator
 import warnings
 
 
+# the four functions describing the optimal values of the attributes used to score the images
 def day(x, day_buffer):
     if x < 0 or x > day_buffer:
         raise RuntimeWarning('day out of bounds 0-', day_buffer, ' days')
@@ -33,6 +34,7 @@ def resolution(x):
         return 1/(x+1)
 
 
+# this function looks at each of the images, scores it, and outputs a list with the index of the 1 best image
 def select_optimal_image(images_to_score, boundary_image, change, **kwargs):
     scores = {}
     for image_index in images_to_score:
