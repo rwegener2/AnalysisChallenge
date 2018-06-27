@@ -5,7 +5,8 @@ import datetime as dt
 from datetime import datetime as dt_sub
 from attribute_functions import select_optimal_image
 import argparse
-
+import sys
+import os
 
 # parse out arguments
 parser = argparse.ArgumentParser()
@@ -31,9 +32,14 @@ elev_weight = 1
 multi_res_weight = 1
 pan_res_weight = 1
 
+# folder where this script, the data and the output folder are located
+# folder_location = '/home/rwegener/PycharmProjects/RadarBookend/Manual_code/'
+folder_location = os.path.abspath(os.path.dirname(sys.argv[0]))
+print('folder location ', folder_location)
+
 # loading change detection polygons and ground truth imagery as geopandas dataframes
-changes_json = gpd.read_file('/home/data/change_polygons.geojson')
-boundaries = gpd.read_file('/home/data/image_strip_boundaries.geojson')
+changes_json = gpd.read_file(folder_location + '/data/change_polygons.geojson')
+boundaries = gpd.read_file(folder_location + '/data/image_strip_boundaries.geojson')
 
 # sort changes and image boundaries such that the 0 index row is the most recently captured image and subsequent images
 # move backwards in time
@@ -191,9 +197,9 @@ for change_index in range(len(changes_json)):
     print('FINISHED ONE IMAGE', len(pre_images), len(post_images))
 
 # convert to geojsons and save
-with open('/home/output/pre_images.json', 'w') as f:
+with open(folder_location + '/output/pre_images.json', 'w') as f:
     f.write(pre_images.to_json(orient='records', lines=True))
 
-with open('/home/output/post_images.json', 'w') as f:
+with open(folder_location + '/output/post_images.json', 'w') as f:
     f.write(post_images.to_json(orient='records', lines=True))
 print('save complete')
