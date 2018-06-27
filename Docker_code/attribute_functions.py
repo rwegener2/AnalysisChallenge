@@ -5,7 +5,7 @@ import warnings
 
 def day(x, day_buffer):
     if x < 0 or x > day_buffer:
-        raise RuntimeWarning('day out of bounds 0-30 days')
+        raise RuntimeWarning('day out of bounds 0-', day_buffer, ' days')
     else:
         return -1/day_buffer*x + 1
 
@@ -34,10 +34,6 @@ def resolution(x):
 
 
 def select_optimal_image(images_to_score, boundary_image, change, **kwargs):
-    '''
-    kwargs should include type = 'pre' or 'post'
-    :return:
-    '''
     scores = {}
     for image_index in images_to_score:
         if kwargs['type'] == 'pre':
@@ -46,8 +42,6 @@ def select_optimal_image(images_to_score, boundary_image, change, **kwargs):
             time_delta = boundary_image.iloc[image_index]['acq_date'] - change['post-date']
         else:
             warnings.warn("select_optimal_images must include keyword 'type' = 'pre', or 'post'")
-        print('time delta ', time_delta.days, 'kwargs ', kwargs['type'])
-        print('pre date ', change['pre-date'], 'post date ', change['post-date'], 'image date ', boundary_image.iloc[image_index]['acq_date'])
         score = kwargs['day_weight']*day(time_delta.days, kwargs['day_buffer']) + \
                 kwargs['nadir_weight']*nadir(boundary_image.iloc[image_index]['off_nadir'] +
                 kwargs['elev_weight']*elevation(boundary_image.iloc[image_index]['sun_elev']) +

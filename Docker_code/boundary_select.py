@@ -117,7 +117,7 @@ for change_index in range(len(changes_json)):
         change_poly = change['geometry'].buffer(spatial_buffer)
         image_poly = boundaries.iloc[image_index]['geometry']
         if change_poly.within(image_poly):
-            clouds = gpd.read_file(folder_location + '/data/cloud_masks/' + boundaries.iloc[image_index]['catalog_id']
+            clouds = gpd.read_file('home/data/cloud_masks/' + boundaries.iloc[image_index]['catalog_id']
                                    + '.geojson')
             for cloud_poly in clouds['geometry']:
                 # checking if cloud list is empty
